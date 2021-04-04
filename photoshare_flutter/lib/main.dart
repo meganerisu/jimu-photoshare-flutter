@@ -50,7 +50,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _firstNameTextController = TextEditingController();
   final _lastNameTextController = TextEditingController();
-  final _usernameTextController = TextEditingController();
+  // final _usernameTextController = TextEditingController();
 
   double _formProgress = 0;
 
@@ -63,7 +63,7 @@ class _SignUpFormState extends State<SignUpForm> {
     var controllers = [
       _firstNameTextController,
       _lastNameTextController,
-      _usernameTextController
+      // _usernameTextController
     ];
     for (var controller in controllers) {
       if (controller.value.text.isNotEmpty) {
@@ -88,22 +88,22 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _firstNameTextController,
-              decoration: InputDecoration(hintText: 'First name'),
+              decoration: InputDecoration(hintText: 'User name'),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _lastNameTextController,
-              decoration: InputDecoration(hintText: 'Last name'),
+              decoration: InputDecoration(hintText: 'Password'),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _usernameTextController,
-              decoration: InputDecoration(hintText: 'Username'),
-            ),
+            // child: TextFormField(
+            // controller: _usernameTextController,
+            // decoration: InputDecoration(hintText: 'Username'),
+            // ),
           ),
           TextButton(
             style: ButtonStyle(
@@ -122,6 +122,9 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             onPressed: _formProgress == 1 ? _showWelcomeScreen : null,
             child: Text('Sign up'),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
           ),
         ],
       ),
