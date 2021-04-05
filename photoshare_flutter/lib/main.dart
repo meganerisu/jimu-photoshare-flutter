@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
+import 'sharepage.dart';
 
-void main() => runApp(SignUpApp());
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SignUpApp extends StatelessWidget {
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   runApp(MyApp());
+// }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MyApp(),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => SignUpScreen(),
-        '/welcome': (context) => WelcomeScreen(),
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Container(
+            color: Colors.white,
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            routes: {
+              '/': (context) => SignUpScreen(),
+              '/welcome': (context) => WelcomeScreen(),
+            },
+          );
+        }
+        return CircularProgressIndicator();
       },
     );
   }
@@ -31,39 +61,51 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-class WelcomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
-      ),
-    );
-  }
-}
-
 class SignUpForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final _firstNameTextController = TextEditingController();
-  final _lastNameTextController = TextEditingController();
-  // final _usernameTextController = TextEditingController();
+  // final _firstNameTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+  final _usernameTextController = TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   double _formProgress = 0;
+  bool _success;
+  String _userEmail;
 
   void _showWelcomeScreen() {
     Navigator.of(context).pushNamed('/welcome');
   }
 
+  void _signInWithEmailAndPassword() async {
+    final User user = (await _auth.signInWithEmailAndPassword(
+      email: _usernameTextController.text,
+      password: _passwordTextController.text,
+    ))
+        .user;
+    if (user != null) {
+      setState(() {
+        _success = true;
+        _userEmail = user.email;
+        Navigator.of(context).pushNamed('/welcome');
+      });
+    } else {
+      setState(() {
+        _success = false;
+      });
+    }
+  }
+
   void _updateFormProgress() {
     var progress = 0.0;
     var controllers = [
-      _firstNameTextController,
-      _lastNameTextController,
-      // _usernameTextController
+      // _firstNameTextController,
+      _passwordTextController,
+      _usernameTextController
     ];
     for (var controller in controllers) {
       if (controller.value.text.isNotEmpty) {
@@ -79,29 +121,30 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     return Form(
       onChanged: _updateFormProgress,
+      key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           AnimatedProgressIndicator(value: _formProgress),
-          Text('Sign up', style: Theme.of(context).textTheme.headline4),
+          Text('Sign in', style: Theme.of(context).textTheme.headline4),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
-              controller: _firstNameTextController,
+              controller: _usernameTextController,
               decoration: InputDecoration(hintText: 'User name'),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
-              controller: _lastNameTextController,
+              controller: _passwordTextController,
               decoration: InputDecoration(hintText: 'Password'),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
-            // child: TextFormField(
-            // controller: _usernameTextController,
+            // // child: TextFormField(
+            //   controller: _firstNameTextController,
             // decoration: InputDecoration(hintText: 'Username'),
             // ),
           ),
@@ -120,8 +163,13 @@ class _SignUpFormState extends State<SignUpForm> {
                     : Colors.blue;
               }),
             ),
-            onPressed: _formProgress == 1 ? _showWelcomeScreen : null,
-            child: Text('Sign up'),
+            // onPressed: _formProgress == 1 ? _showWelcomeScreen : null,
+            onPressed: () async {
+              if (_formKey.currentState.validate()) {
+                _signInWithEmailAndPassword();
+              }
+            },
+            child: Text('Sign in'),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -185,11 +233,14 @@ class _AnimatedProgressIndicatorState extends State<AnimatedProgressIndicator>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (context, child) => LinearProgressIndicator(
-        value: _curveAnimation.value,
-        valueColor: _colorAnimation,
-        backgroundColor: _colorAnimation.value.withOpacity(0.4),
-      ),
+      builder: (context, child) {
+        var curveAnimation = _curveAnimation;
+        return LinearProgressIndicator(
+          value: curveAnimation.value,
+          valueColor: _colorAnimation,
+          backgroundColor: _colorAnimation.value.withOpacity(0.4),
+        );
+      },
     );
   }
 }
