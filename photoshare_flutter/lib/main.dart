@@ -89,13 +89,15 @@ class _SignUpFormState extends State<SignUpForm> {
         .user;
     if (user != null) {
       setState(() {
-        _success = true;
-        _userEmail = user.email;
+        // _success = true;
+        // _userEmail = user.email;
+        _usernameTextController.clear();
+        _passwordTextController.clear();
         Navigator.of(context).pushNamed('/welcome');
       });
     } else {
       setState(() {
-        _success = false;
+        // _success = false;
       });
     }
   }
@@ -137,16 +139,13 @@ class _SignUpFormState extends State<SignUpForm> {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
+              obscureText: true,
               controller: _passwordTextController,
               decoration: InputDecoration(hintText: 'Password'),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
-            // // child: TextFormField(
-            //   controller: _firstNameTextController,
-            // decoration: InputDecoration(hintText: 'Username'),
-            // ),
           ),
           TextButton(
             style: ButtonStyle(
