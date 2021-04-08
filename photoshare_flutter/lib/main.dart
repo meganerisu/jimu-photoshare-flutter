@@ -52,6 +52,16 @@ class SignUpScreen extends StatelessWidget {
       body: Center(
         child: SizedBox(
           width: 400,
+          // child: Column(
+          //   children: [
+          //     Card(
+          //       child: SignUpForm(),
+          //     ),
+          //     Text(_auth.currentUser != null
+          //         ? "hasdata" //_auth.currentUser.email
+          //         : "nodata")
+          //   ],
+          // ),
           child: Card(
             child: SignUpForm(),
           ),
@@ -74,12 +84,12 @@ class _SignUpFormState extends State<SignUpForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   double _formProgress = 0;
-  bool _success;
-  String _userEmail;
+  // bool _success;
+  // String _userEmail;
 
-  void _showWelcomeScreen() {
-    Navigator.of(context).pushNamed('/welcome');
-  }
+  // void _showWelcomeScreen() {
+  //   Navigator.of(context).pushNamed('/welcome');
+  // }
 
   void _signInWithEmailAndPassword() async {
     final User user = (await _auth.signInWithEmailAndPassword(
@@ -91,9 +101,9 @@ class _SignUpFormState extends State<SignUpForm> {
       setState(() {
         // _success = true;
         // _userEmail = user.email;
-        _usernameTextController.clear();
-        _passwordTextController.clear();
-        Navigator.of(context).pushNamed('/welcome');
+        // _usernameTextController.clear();
+        // _passwordTextController.clear();
+        Navigator.of(context).pushReplacementNamed('/welcome');
       });
     } else {
       setState(() {
