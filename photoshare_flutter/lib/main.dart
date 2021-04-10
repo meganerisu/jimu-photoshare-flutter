@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             routes: {
               '/': (context) => SignUpScreen(),
-              '/welcome': (context) => PhotoShareTopPage(),
+              '/photoShareTop': (context) => PhotoShareTopPage(),
+              '/photoShareSecoundary': (context) => PhotoShareSecoundaryPage(),
+              '/Album': (context) => AlbumPage(),
             },
           );
         }
@@ -88,7 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
   // String _userEmail;
 
   // void _showWelcomeScreen() {
-  //   Navigator.of(context).pushNamed('/welcome');
+  //   Navigator.of(context).pushNamed('/photoShareTop');
   // }
 
   void _signInWithEmailAndPassword() async {
@@ -103,7 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
         // _userEmail = user.email;
         // _usernameTextController.clear();
         // _passwordTextController.clear();
-        Navigator.of(context).pushReplacementNamed('/welcome');
+        Navigator.of(context).pushReplacementNamed('/photoShareTop');
       });
     } else {
       setState(() {
