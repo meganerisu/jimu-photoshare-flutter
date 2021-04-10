@@ -82,16 +82,12 @@ class _SignUpFormState extends State<SignUpForm> {
   // final _firstNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
   final _usernameTextController = TextEditingController();
+  String _infoText = "";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   double _formProgress = 0;
-  // bool _success;
-  // String _userEmail;
-
-  // void _showWelcomeScreen() {
-  //   Navigator.of(context).pushNamed('/photoShareTop');
-  // }
+  bool _success;
 
   void _signInWithEmailAndPassword() async {
     final User user = (await _auth.signInWithEmailAndPassword(
@@ -101,7 +97,7 @@ class _SignUpFormState extends State<SignUpForm> {
         .user;
     if (user != null) {
       setState(() {
-        // _success = true;
+        _success = true;
         // _userEmail = user.email;
         // _usernameTextController.clear();
         // _passwordTextController.clear();
@@ -109,7 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
       });
     } else {
       setState(() {
-        // _success = false;
+        _success = false;
       });
     }
   }
@@ -117,9 +113,9 @@ class _SignUpFormState extends State<SignUpForm> {
   void _updateFormProgress() {
     var progress = 0.0;
     var controllers = [
-      // _firstNameTextController,
+      // _firstNameTextController
+      _usernameTextController,
       _passwordTextController,
-      _usernameTextController
     ];
     for (var controller in controllers) {
       if (controller.value.text.isNotEmpty) {
@@ -158,6 +154,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
+            child: Text(_infoText),
           ),
           TextButton(
             style: ButtonStyle(
@@ -176,9 +173,24 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             // onPressed: _formProgress == 1 ? _showWelcomeScreen : null,
             onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                _signInWithEmailAndPassword();
+              try {
+                final UserCredential result =
+                    await _auth.signInWithEmailAndPassword(
+                  email: _usernameTextController.text,
+                  password: _passwordTextController.text,
+                );
+                Navigator.of(context).pushReplacementNamed('/photoShareTop');
+                setState(() {
+                  _infoText = "Loged in";
+                });
+              } catch (e) {
+                setState(() {
+                  _infoText = "Coudn't log in";
+                });
               }
+              // if (_formKey.currentState.validate()) {
+              //   _signInWithEmailAndPassword();
+              // }
             },
             child: Text('Sign in'),
           ),

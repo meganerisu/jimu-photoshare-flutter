@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'tree.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 var listItem = [
@@ -53,16 +56,18 @@ class PhotoShareTopPage extends StatelessWidget {
         title: const Text("jim-photoshare"),
       ),
       body: ListView.builder(
-          itemCount: listItem.length,
+          // itemCount: listItem.length,
+          itemCount: photoShare.children.length,
           itemBuilder: (BuildContext context, int index) {
             //expansionList wo tsukau
             return Container(
               child: Card(
                 child: ListTile(
-                  title: Text(listItem[index]),
+                  title: Text(photoShare.children[index].name),
                   onTap: () {
                     Navigator.of(context).pushNamed('/photoShareSecoundary',
-                        arguments: listItem[index].toString());
+                        arguments: Category(photoShare.children[index].name,
+                            photoShare.children[index].children));
                   },
                 ),
               ),
@@ -82,22 +87,23 @@ class PhotoShareTopPage extends StatelessWidget {
 class PhotoShareSecoundaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final String topCategoryName = ModalRoute.of(context).settings.arguments;
+    final Category topCategory = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(topCategoryName),
+        title: Text(topCategory.name),
       ),
       body: ListView.builder(
-          itemCount: listItem2.length,
+          itemCount: topCategory.children.length,
           itemBuilder: (BuildContext context, int index) {
             //expansionList wo tsukau
             return Container(
               child: Card(
                 child: ListTile(
-                  title: Text(listItem2[index]),
+                  title: Text(topCategory.children[index].name),
                   onTap: () {
                     Navigator.of(context).pushNamed('/Album',
-                        arguments: listItem2[index].toString());
+                        arguments: Category(topCategory.children[index].name,
+                            topCategory.children[index].children));
                   },
                 ),
               ),
@@ -115,22 +121,32 @@ class PhotoShareSecoundaryPage extends StatelessWidget {
 }
 
 class AlbumPage extends StatelessWidget {
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String albumName = ModalRoute.of(context).settings.arguments;
+    final Category subCategory = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(albumName),
+        title: Text(subCategory.name),
       ),
       body: ListView.builder(
-          itemCount: listItem3.length,
+          itemCount: subCategory.children.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
               child: Card(
                 child: ListTile(
-                  title: Text(listItem3[index]),
-                  subtitle: Text("subtitle"),
-                  onTap: () {},
+                  title: Text(subCategory.children[index].name),
+                  subtitle: Text(subCategory.children[index].url.toString()),
+                  onTap: () {
+                    _launchURL(subCategory.children[index].url.toString());
+                  },
                 ),
               ),
             );
