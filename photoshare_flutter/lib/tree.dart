@@ -18,40 +18,53 @@ class Album {
 // final List urlJimuGyoza = ["www.apple.com"];
 
 final Album jimuZushi13 =
-    Album("jimuZushi13", "https://photos.app.goo.gl/knFwQkYYpHjU9dVd9");
+    Album("事務寿司2017", "https://photos.app.goo.gl/knFwQkYYpHjU9dVd9");
 final Album jimuBBQ13 =
-    Album("jimuBBQ13", "https://photos.app.goo.gl/8U9oAVGSczLSSPWVA");
-// final Album jimuNomi13 = Album("jimuNomi13", "");
+    Album("事務BBQ2017", "https://photos.app.goo.gl/8U9oAVGSczLSSPWVA");
 final Album jimuDrive13 =
-    Album("jimuDrive13", "https://photos.app.goo.gl/zNX5kMgRozMWDR5e8");
+    Album("事務ドライブ2017", "https://photos.app.goo.gl/zNX5kMgRozMWDR5e8");
 final Album jimuSesshou13 =
-    Album("kobetsuSesshou13", "https://photos.app.goo.gl/t7EVff13xwGqnnpC6");
+    Album("個別折衝2017", "https://photos.app.goo.gl/t7EVff13xwGqnnpC6");
 final Album jimuHakone =
-    Album("jimuHakone13", "https://photos.app.goo.gl/GUaKcpuVhez61aLKA");
-final Album jimuBowling = Album("jimuBowling13", "");
+    Album("事務旅行（箱根）", "https://photos.app.goo.gl/GUaKcpuVhez61aLKA");
 final Album jimuChiba =
-    Album("jimuTrip13", "https://photos.app.goo.gl/GUaKcpuVhez61aLKA");
+    Album("事務旅行（千葉）", "https://photos.app.goo.gl/GUaKcpuVhez61aLKA");
 final Album jimuGyoza13 =
-    Album("jimuGyoza13", "https://photos.app.goo.gl/Nbh6ThtZthczmnvC9");
+    Album("事務餃子2017", "https://photos.app.goo.gl/Nbh6ThtZthczmnvC9");
+final Album jimuBowling =
+    Album("事務ボウリング2018", "https://photos.app.goo.gl/HQ5XRfmYGS1LsG9eA");
 
-final Album jimuBBQ14 = Album("jimuGyoza", "");
+final Album jimuZushi14 =
+    Album("事務寿司2018", "https://photos.app.goo.gl/orBkRgUzweBVVKYg8");
+final Album jimuNomi14 =
+    Album("事務飲み2018", "https://photos.app.goo.gl/fn7i83QjP4iCjyMW8");
+final Album jimuBBQ14 = Album("事務BBQ2018", "");
+final Album jimuDrive14 = Album("事務ドライブ2018", "");
+final Album jimuSaizeriya14 = Album("事務サイゼ2018", "");
+final Album jimuGyoza14 =
+    Album("事務餃子2019", "https://photos.app.goo.gl/pCm7UXgAWqK53Y6e9");
 
-final Album jimuGyoza15 =
-    Album("jimuGyoza", "https://photos.app.goo.gl/pCm7UXgAWqK53Y6e9");
-
-Category jimu13th = Category("jimu13th", [
+Category jimu13th = Category("事務13th", [
   jimuZushi13,
   jimuBBQ13,
   jimuDrive13,
   jimuSesshou13,
-  jimuGyoza15,
+  jimuGyoza13,
   jimuHakone,
-  jimuBowling,
-  jimuChiba
+  jimuChiba,
+  jimuBowling
 ]);
-Category jimu14th = Category("jimu14th", [jimuBBQ14, jimuGyoza15, jimuHakone]);
-Category jimu15th = Category("jimu15th", []);
 
-Category jimukyoku = Category("jimukyoku", [jimu13th, jimu14th, jimu15th]);
+Category jimu14th = Category("事務14th", [
+  jimuZushi14,
+  jimuNomi14,
+  jimuBBQ14,
+  jimuDrive14,
+  jimuSaizeriya14,
+  jimuGyoza14
+]);
+Category jimu15th = Category("事務15th", []);
+
+Category jimukyoku = Category("事務局", [jimu13th, jimu14th, jimu15th]);
 
 Category photoShare = Category("photoShare", [jimukyoku]);
