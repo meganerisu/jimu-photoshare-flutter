@@ -27,8 +27,7 @@ final Album jimuSesshou13 =
     Album("個別折衝2017", "https://photos.app.goo.gl/t7EVff13xwGqnnpC6");
 final Album jimuHakone =
     Album("事務旅行（箱根）", "https://photos.app.goo.gl/GUaKcpuVhez61aLKA");
-final Album jimuChiba =
-    Album("事務旅行（千葉）", "https://photos.app.goo.gl/GUaKcpuVhez61aLKA");
+final Album jimuChiba = Album("事務旅行（千葉）", "");
 final Album jimuGyoza13 =
     Album("事務餃子2017", "https://photos.app.goo.gl/Nbh6ThtZthczmnvC9");
 final Album jimuBowling =
@@ -39,8 +38,11 @@ final Album jimuZushi14 =
 final Album jimuNomi14 =
     Album("事務飲み2018", "https://photos.app.goo.gl/fn7i83QjP4iCjyMW8");
 final Album jimuBBQ14 = Album("事務BBQ2018", "");
-final Album jimuDrive14 = Album("事務ドライブ2018", "");
+final Album jimuDrive14 =
+    Album("事務ドライブ2018", "https://photos.app.goo.gl/8nHbERujWsYuJJcm8");
 final Album jimuSaizeriya14 = Album("事務サイゼ2018", "");
+final Album jimuMiyakofes14 =
+    Album("本祭事務", "https://photos.app.goo.gl/9CvkWxg1SvygsCiy5");
 final Album jimuGyoza14 =
     Album("事務餃子2019", "https://photos.app.goo.gl/pCm7UXgAWqK53Y6e9");
 
@@ -61,6 +63,7 @@ Category jimu14th = Category("事務14th", [
   jimuBBQ14,
   jimuDrive14,
   jimuSaizeriya14,
+  jimuMiyakofes14,
   jimuGyoza14
 ]);
 Category jimu15th = Category("事務15th", []);
