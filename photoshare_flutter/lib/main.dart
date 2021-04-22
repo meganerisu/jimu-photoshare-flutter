@@ -3,8 +3,13 @@ import 'sharepage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseAnalytics analytics = FirebaseAnalytics();
+final FirebaseAnalyticsObserver observer =
+    FirebaseAnalyticsObserver(analytics: analytics);
 
 // void main() {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +43,9 @@ class MyApp extends StatelessWidget {
               '/photoShareSecoundary': (context) => PhotoShareSecoundaryPage(),
               '/Album': (context) => AlbumPage(),
             },
+            navigatorObservers: [
+              FirebaseAnalyticsObserver(analytics: analytics),
+            ], //https://pub.dev/documentation/firebase_analytics/latest/
           );
         }
         return CircularProgressIndicator();
@@ -89,26 +97,26 @@ class _SignUpFormState extends State<SignUpForm> {
   double _formProgress = 0;
   bool _success;
 
-  void _signInWithEmailAndPassword() async {
-    final User user = (await _auth.signInWithEmailAndPassword(
-      email: _usernameTextController.text,
-      password: _passwordTextController.text,
-    ))
-        .user;
-    if (user != null) {
-      setState(() {
-        _success = true;
-        // _userEmail = user.email;
-        // _usernameTextController.clear();
-        // _passwordTextController.clear();
-        Navigator.of(context).pushReplacementNamed('/photoShareTop');
-      });
-    } else {
-      setState(() {
-        _success = false;
-      });
-    }
-  }
+  // void _signInWithEmailAndPassword() async {
+  //   final User user = (await _auth.signInWithEmailAndPassword(
+  //     email: _usernameTextController.text,
+  //     password: _passwordTextController.text,
+  //   ))
+  //       .user;
+  //   if (user != null) {
+  //     setState(() {
+  //       _success = true;
+  //       // _userEmail = user.email;
+  //       // _usernameTextController.clear();
+  //       // _passwordTextController.clear();
+  //       Navigator.of(context).pushReplacementNamed('/photoShareTop');
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _success = false;
+  //     });
+  //   }
+  // }
 
   void _updateFormProgress() {
     var progress = 0.0;
@@ -180,6 +188,10 @@ class _SignUpFormState extends State<SignUpForm> {
                   password: _passwordTextController.text,
                 );
                 Navigator.of(context).pushReplacementNamed('/photoShareTop');
+                analytics.logLogin();
+                analytics.logEvent(
+                    name: "login_account",
+                    parameters: {"account": _auth.currentUser.email});
                 setState(() {
                   _infoText = "Loged in";
                 });
