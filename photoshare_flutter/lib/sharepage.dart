@@ -5,55 +5,13 @@ import 'package:url_launcher/url_launcher.dart';
 import 'tree.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-var listItem = [
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine",
-  "ten",
-  "eleven",
-  "tewlve"
-];
-var listItem2 = [
-  "one2",
-  "two2",
-  "three2",
-  "four2",
-  "five2",
-  "six2",
-  "seven2",
-  "eight2",
-  "nine2",
-  "ten2",
-  "eleven2",
-  "tewlve2"
-];
-var listItem3 = [
-  "one3",
-  "two3",
-  "three3",
-  "four3",
-  "five3",
-  "six3",
-  "seven3",
-  "eight3",
-  "nine3",
-  "ten3",
-  "eleven3",
-  "tewlve3"
-];
 
 class PhotoShareTopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("jim-photoshare"),
+        title: const Text("jimu-photoshare"),
       ),
       body: ListView.builder(
           // itemCount: listItem.length,
