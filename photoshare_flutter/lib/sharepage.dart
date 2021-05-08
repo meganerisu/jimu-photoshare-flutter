@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'tree.dart';
